@@ -63,6 +63,9 @@ mse = mean_squared_error(y_test, y_pred)
 print(f'Mean Squared Error: {mse}')
 
 # Используйте модель для оценки стоимости автомобиля (пример входных данных)
-input_data = [[2018, 2.0, 30000, 1, 200, 5, 'Sedan', 0, 1, 0, 0, 0]]
+input_data = [
+    [15000.0, 2017, 1435, 1, 50000, 1, 2, 120.0, 5, 15.5, 0]
+]
+
 predicted_price = model.predict(input_data)
 print(f'Predicted Price: ${predicted_price[0]:.2f}')
