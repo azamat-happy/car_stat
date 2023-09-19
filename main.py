@@ -2,10 +2,13 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+import random
 
 # Загрузка файла XLSX
 file_path = 'data.xlsx'
 df = pd.read_excel(file_path)
+
+random.seed(10)
 
 try:
     # Преобразование столбца full_name
@@ -64,7 +67,7 @@ print(f'Mean Squared Error: {mse}')
 
 # Используйте модель для оценки стоимости автомобиля (пример входных данных)
 input_data = [
-    [15000.0, 2017, 1435, 1, 50000, 1, 2, 120.0, 5, 15.5, 0]
+    [15.0, 2017, 1435, 1, 50000, 1, 2, 120.0, 5, 15.5, 0]
 ]
 
 predicted_price = model.predict(input_data)
