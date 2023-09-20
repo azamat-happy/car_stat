@@ -435,7 +435,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>labelCarName</string>
+          <string/>
          </property>
         </widget>
        </item>
@@ -455,7 +455,7 @@
           <bool>false</bool>
          </property>
          <property name="text">
-          <string>predictionPrice</string>
+          <string/>
          </property>
         </widget>
        </item>

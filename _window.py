@@ -17,7 +17,7 @@ class Window(QMainWindow):
         self.ui.price_btn.clicked.connect(self._price_btn)
 
     def _price_btn(self):
-        input_data = [15.0]
+        input_data = []
         input_data.append(self.ui.year.text())
         input_data.append(self.ui.engine_capacity.toPlainText())
 
@@ -36,7 +36,6 @@ class Window(QMainWindow):
 
         input_data.append(self.ui.max_power.toPlainText())
         input_data.append(self.ui.seats.currentText())
-        input_data.append(15.5)
 
         if self.ui.body_type.currentText() == "Sedan":
             input_data.append(0)
@@ -57,7 +56,9 @@ class Window(QMainWindow):
                break
         if flag:
             input_data = [float(i) for i in input_data]
-            _logic_MainWindow(input_data)
+            output_data = _logic_MainWindow(input_data)
+            self.ui.price_lb.setText(output_data)
+            self.ui.name_car_lb.setText(self.ui.name_car.toPlainText())
         print(input_data)
 
 
