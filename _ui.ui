@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>765</width>
-    <height>700</height>
+    <height>618</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -66,24 +66,19 @@
       <property name="bottomMargin">
        <number>6</number>
       </property>
-      <item row="1" column="1">
-       <widget class="QTextBrowser" name="textBrowser">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+      <item row="1" column="0">
+       <widget class="QLabel" name="labelCarName">
+        <property name="text">
+         <string>Название машины:</string>
         </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QTextEdit" name="name_car">
         <property name="maximumSize">
          <size>
           <width>16777215</width>
           <height>25</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>123</width>
-          <height>12</height>
          </size>
         </property>
        </widget>
@@ -96,18 +91,18 @@
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QCalendarWidget" name="calendarWidget">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+       <widget class="QSpinBox" name="year">
+        <property name="enabled">
+         <bool>true</bool>
         </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>120</height>
-         </size>
+        <property name="minimum">
+         <number>1990</number>
+        </property>
+        <property name="maximum">
+         <number>2023</number>
+        </property>
+        <property name="value">
+         <number>2020</number>
         </property>
        </widget>
       </item>
@@ -115,28 +110,6 @@
        <widget class="QLabel" name="labelEngineCapacity">
         <property name="text">
          <string>Объем двигателя:</string>
-        </property>
-       </widget>
-      </item>
-      <item row="3" column="1">
-       <widget class="QTextBrowser" name="textBrowser_2">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>123</width>
-          <height>12</height>
-         </size>
         </property>
        </widget>
       </item>
@@ -148,7 +121,7 @@
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QComboBox" name="comboBox">
+       <widget class="QComboBox" name="transmission_type">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>1</horstretch>
@@ -156,8 +129,18 @@
          </sizepolicy>
         </property>
         <property name="currentText">
-         <string/>
+         <string>Manual</string>
         </property>
+        <item>
+         <property name="text">
+          <string>Manual</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Automatic</string>
+         </property>
+        </item>
        </widget>
       </item>
       <item row="5" column="0">
@@ -167,66 +150,22 @@
         </property>
        </widget>
       </item>
-      <item row="5" column="1">
-       <widget class="QTextBrowser" name="textBrowser_3">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>123</width>
-          <height>12</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="6" column="0">
+      <item row="7" column="0">
        <widget class="QLabel" name="labeNumOwners">
         <property name="text">
          <string>Количество владельцев:</string>
         </property>
        </widget>
       </item>
-      <item row="6" column="1">
-       <widget class="QTextBrowser" name="textBrowser_4">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>123</width>
-          <height>12</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="7" column="0">
+      <item row="8" column="0">
        <widget class="QLabel" name="labelFuelType">
         <property name="text">
          <string>Тип топлива:</string>
         </property>
        </widget>
       </item>
-      <item row="7" column="1">
-       <widget class="QComboBox" name="comboBox_2">
+      <item row="8" column="1">
+       <widget class="QComboBox" name="fuel_type">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>1</horstretch>
@@ -234,48 +173,46 @@
          </sizepolicy>
         </property>
         <property name="currentText">
-         <string/>
+         <string>Petrol</string>
         </property>
+        <item>
+         <property name="text">
+          <string>Petrol</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Electric</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Diesel</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>CNG</string>
+         </property>
+        </item>
        </widget>
       </item>
-      <item row="8" column="0">
+      <item row="9" column="0">
        <widget class="QLabel" name="labelEnginePower">
         <property name="text">
          <string>Мощность двигателя:</string>
         </property>
        </widget>
       </item>
-      <item row="8" column="1">
-       <widget class="QTextBrowser" name="textBrowser_5">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>25</height>
-         </size>
-        </property>
-        <property name="baseSize">
-         <size>
-          <width>123</width>
-          <height>12</height>
-         </size>
-        </property>
-       </widget>
-      </item>
-      <item row="9" column="0">
+      <item row="10" column="0">
        <widget class="QLabel" name="labelNumSeats">
         <property name="text">
          <string>Количество мест:</string>
         </property>
        </widget>
       </item>
-      <item row="9" column="1">
-       <widget class="QComboBox" name="comboBox_3">
+      <item row="10" column="1">
+       <widget class="QComboBox" name="seats">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>1</horstretch>
@@ -283,19 +220,39 @@
          </sizepolicy>
         </property>
         <property name="currentText">
-         <string/>
+         <string>5</string>
         </property>
+        <item>
+         <property name="text">
+          <string>5</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>6</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>7</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>8</string>
+         </property>
+        </item>
        </widget>
       </item>
-      <item row="10" column="0">
+      <item row="11" column="0">
        <widget class="QLabel" name="labelBodyType">
         <property name="text">
          <string>Кузов:</string>
         </property>
        </widget>
       </item>
-      <item row="10" column="1">
-       <widget class="QComboBox" name="comboBox_4">
+      <item row="11" column="1">
+       <widget class="QComboBox" name="body_type">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
           <horstretch>1</horstretch>
@@ -303,14 +260,72 @@
          </sizepolicy>
         </property>
         <property name="currentText">
-         <string/>
+         <string>Sedan</string>
+        </property>
+        <item>
+         <property name="text">
+          <string>Sedan</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Coupe</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Hatchback</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>SUV</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>MUV</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QTextEdit" name="engine_capacity">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
-       <widget class="QLabel" name="labelCarName">
-        <property name="text">
-         <string>Название машины:</string>
+      <item row="5" column="1">
+       <widget class="QTextEdit" name="kms_driven">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="7" column="1">
+       <widget class="QTextEdit" name="owner_type">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="9" column="1">
+       <widget class="QTextEdit" name="max_power">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>25</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -361,7 +376,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="price_btn">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -415,7 +430,7 @@
         </spacer>
        </item>
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="name_car_lb">
          <property name="enabled">
           <bool>false</bool>
          </property>
@@ -435,7 +450,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QLabel" name="label_4">
+        <widget class="QLabel" name="price_lb">
          <property name="enabled">
           <bool>false</bool>
          </property>
