@@ -21,7 +21,7 @@ class Window(QMainWindow):
         input_data.append(self.ui.year.text())
         input_data.append(self.ui.engine_capacity.toPlainText())
 
-        if self.ui.transmission_type.currentText() == "manual":
+        if self.ui.transmission_type.currentText() == "Manual":
             input_data.append(0)
         else:
             input_data.append(1)
