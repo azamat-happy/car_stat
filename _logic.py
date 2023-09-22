@@ -100,6 +100,11 @@ def _logic_MainWindow(input_data):
     input = [input_data]
     print(input)
     predicted_price = model.predict(input)
-    output_data = f'${predicted_price[0]:.2f}'
+    price_of_the_car=predicted_price[0]*100000*1.16
+
+    # Форматируем сумму с разделителями тысяч и символом рубля
+    formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
+    output_data = f'{formatted_price} ₽'
+    print(output_data)
     print(output_data)
     return output_data
