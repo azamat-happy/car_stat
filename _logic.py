@@ -2,13 +2,16 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
+# Для масштабирования данных перед передачей их в модель линейной регрессии
+from sklearn.preprocessing import StandardScaler
 import random
+
 
 def _logic_MainWindow(input_data):
     # Загрузка файла XLSX
     file_path = 'data.xlsx'
     df = pd.read_excel(file_path)
-    random.seed(10)
+    # random.seed(10)
     try:
         # Преобразование столбца full_name
         full_name_part = df['full_name'].str.split(n=1, expand=True)[0].str.replace(' ', '').astype(int)
@@ -91,15 +94,12 @@ def _logic_MainWindow(input_data):
     mse = mean_squared_error(y_test, y_pred)
     print(f'Mean Squared Error: {mse}')
 
-    # Используйте модель для оценки стоимости автомобиля (пример входных данных)
-    input_data = [
-        [2017.0, 1435.0, 1.0, 50000.0, 1.0, 2.0, 120.0, 5.0, 0.0]
-    ]
+    # # Используйте модель для оценки стоимости автомобиля (пример входных данных)
+    # input_data =  [2017, 1435, 1.0, 50000.0, 1.0, 2.0, 120.0, 5.0, 0.0]
 
-    print(input_data)
-    predicted_price = model.predict(input_data)
+    input = [input_data]
+    print(input)
+    predicted_price = model.predict(input)
     output_data = f'${predicted_price[0]:.2f}'
     print(output_data)
     return output_data
-
-
