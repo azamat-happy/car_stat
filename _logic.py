@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression, RidgeCV, LassoCV
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.metrics import mean_absolute_error
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Для масштабирования данных перед передачей их в модель линейной регрессии
 from sklearn.preprocessing import StandardScaler
@@ -187,6 +188,47 @@ def _logic_MainWindow(input_data):
     print(f"MAE для LinearRegression: {mae_linear}")
     print(f"MAE для Ridge: {mae_ridge}")
     print(f"MAE для Lasso: {mae_lasso}")
+
+    plt.figure()
+    # График остатков для LinearRegression модели
+    residuals_linear = y_actual - y_pred
+    plt.scatter(y_pred, residuals_linear)
+    plt.xlabel("Прогнозные значения")
+    plt.ylabel("Остатки")
+    plt.title("График остатков для LinearRegression модели")
+    plt.axhline(y=0, color='r', linestyle='--')
+    plt.show()
+
+    plt.figure()
+    # График остатков для Ridge модели
+    residuals_ridge = y_actual - y_pred_ridge
+    plt.scatter(y_pred_ridge, residuals_ridge)
+    plt.xlabel("Прогнозные значения")
+    plt.ylabel("Остатки")
+    plt.title("График остатков для Ridge модели")
+    plt.axhline(y=0, color='r', linestyle='--')
+    plt.show()
+
+    plt.figure()
+    # График остатков для Lasso модели
+    residuals_lasso = y_actual - y_pred_lasso
+    plt.scatter(y_pred_lasso, residuals_lasso)
+    plt.xlabel("Прогнозные значения")
+    plt.ylabel("Остатки")
+    plt.title("График остатков для Lasso модели")
+    plt.axhline(y=0, color='r', linestyle='--')
+    plt.show()
+
+    # Для модели Ridge
+    residuals_ridge = y_actual - y_pred_ridge  # Остатки для Ridge
+    residual_variance_ridge = np.var(residuals_ridge)
+    print(f'Остаточная дисперсия для модели Ridge: {residual_variance_ridge}')
+
+    # Для модели Lasso
+    residuals_lasso = y_actual - y_pred_lasso  # Остатки для Lasso
+    residual_variance_lasso = np.var(residuals_lasso)
+    print(f'Остаточная дисперсия для модели Lasso: {residual_variance_lasso}')
+
 
     input = [input_data]
     # print(input)
