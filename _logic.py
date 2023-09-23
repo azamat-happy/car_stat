@@ -189,11 +189,37 @@ def _logic_MainWindow(input_data):
     print("predicted_price_lasso = lasso_model.predict(input)")
     print(predicted_price_lasso * 100000 * 1.16)
 
-    price_of_the_car=predicted_price[0]*100000*1.16
+    r2_linear = r2_score(y_test, y_pred)
+    mse_linear = mean_squared_error(y_test, y_pred)
 
-    # Форматируем сумму с разделителями тысяч и символом рубля
-    formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
-    output_data = f'{formatted_price} ₽'
-    # print(output_data)
-    # print(output_data)
-    return output_data
+    r2_ridge = r2_score(y_test, y_pred_ridge)
+    mse_ridge = mean_squared_error(y_test, y_pred_ridge)
+
+    r2_lasso = r2_score(y_test, y_pred_lasso)
+    mse_lasso = mean_squared_error(y_test, y_pred_lasso)
+
+    if r2_ridge > r2_linear and r2_ridge > r2_lasso and mse_ridge < mse_linear and mse_ridge < mse_lasso:
+        # Вывод результата для Ridge модели
+        print("Прогноз с использованием модели Ridge:")
+        print(predicted_price_ridge * 100000 * 1.16)
+        price_of_the_car = predicted_price_ridge[0] * 100000 * 1.16
+        formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
+        output_data = f'{formatted_price} ₽'
+        return output_data
+    elif r2_lasso > r2_linear and r2_lasso > r2_ridge and mse_lasso < mse_linear and mse_lasso < mse_ridge:
+        # Вывод результата для Lasso модели
+        print("Прогноз с использованием модели Lasso:")
+        print(predicted_price_lasso * 100000 * 1.16)
+        price_of_the_car = predicted_price_lasso[0] * 100000 * 1.16
+        formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
+        output_data = f'{formatted_price} ₽'
+        return output_data
+    else:
+        # Вывод результата для LinearRegression модели (если другие модели не превосходят)
+        print("Прогноз с использованием модели LinearRegression:")
+        print(predicted_price * 100000 * 1.16)
+        price_of_the_car = predicted_price[0] * 100000 * 1.16
+        formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
+        output_data = f'{formatted_price} ₽'
+        return output_data
+
