@@ -2,7 +2,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression, RidgeCV, LassoCV
 from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.metrics import mean_absolute_error
 import numpy as np
+
 # Для масштабирования данных перед передачей их в модель линейной регрессии
 from sklearn.preprocessing import StandardScaler
 import random
@@ -171,6 +173,20 @@ def _logic_MainWindow(input_data):
     print(y_pred_lasso)
     # # Используйте модель для оценки стоимости автомобиля (пример входных данных)
     # input_data =  [2017, 1435, 1.0, 50000.0, 1.0, 2.0, 120.0, 5.0, 0.0]
+
+    # Расчет MAE для LinearRegression модели
+    mae_linear = mean_absolute_error(y_test, y_pred)
+
+    # Расчет MAE для Ridge модели
+    mae_ridge = mean_absolute_error(y_test, y_pred_ridge)
+
+    # Расчет MAE для Lasso модели
+    mae_lasso = mean_absolute_error(y_test, y_pred_lasso)
+
+    # Вывод результатов MAE
+    print(f"MAE для LinearRegression: {mae_linear}")
+    print(f"MAE для Ridge: {mae_ridge}")
+    print(f"MAE для Lasso: {mae_lasso}")
 
     input = [input_data]
     # print(input)
