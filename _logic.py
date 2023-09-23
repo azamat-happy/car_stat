@@ -1,7 +1,8 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression, RidgeCV, LassoCV
 from sklearn.metrics import mean_squared_error, r2_score
+import numpy as np
 # Для масштабирования данных перед передачей их в модель линейной регрессии
 from sklearn.preprocessing import StandardScaler
 import random
@@ -11,7 +12,7 @@ def _logic_MainWindow(input_data):
     # Загрузка файла XLSX
     file_path = 'data.xlsx'
     df = pd.read_excel(file_path)
-    # random.seed(10)
+    random.seed(10)
     try:
         # Преобразование столбца full_name
         full_name_part = df['full_name'].str.split(n=1, expand=True)[0].str.replace(' ', '').astype(int)
@@ -96,20 +97,103 @@ def _logic_MainWindow(input_data):
     r2 = r2_score(y_test, y_pred)
     print(f'Коэффициент детерминации (R^2): {r2}')
 
+    # вычисление среднеквадратичной ошибки
     mse = mean_squared_error(y_test, y_pred)
-    print(f'Mean Squared Error: {mse}')
+    print(f'Ошибка аппроксимации (MSE): {mse}')
 
+    # Подсчет остатков
+    y_actual = y_test  # Фактические значения целевой переменной на тестовом наборе
+    y_predicted = y_pred  # Прогнозные значения целевой переменной на тестовом наборе
+    residuals = y_actual - y_predicted  # Остатки
+
+    # Вычисление остаточной дисперсии
+    residual_variance = np.var(residuals)
+    print(f'Остаточная дисперсия: {residual_variance}')
+
+    # Модель Ridge с кросс-валидацией для выбора параметра alpha (λ)
+    alphas = [0.01, 0.1, 1, 10, 100]  # Диапазон значений alpha для перебора
+
+    ridge_model = RidgeCV(alphas=alphas, cv=5)  # cv - количество фолдов в кросс-валидации
+    ridge_model.fit(X_train, y_train)  # Обучение модели Ridge
+
+    # Получение наилучшего значения alpha (λ)
+    best_alpha_ridge = ridge_model.alpha_
+
+    # Оценка коэффициентов модели Ridge
+    ridge_coefficients = ridge_model.coef_
+
+    # Прогнозирование с использованием модели Ridge
+    y_pred_ridge = ridge_model.predict(X_test)
+
+    # Вычисление коэффициента детерминации (R^2) и среднеквадратичной ошибки (MSE) для Ridge
+    r2_ridge = r2_score(y_test, y_pred_ridge)
+    mse_ridge = mean_squared_error(y_test, y_pred_ridge)
+
+    # Модель Lasso с кросс-валидацией для выбора параметра alpha (α)
+    lasso_model = LassoCV(alphas=alphas, cv=5)  # cv - количество фолдов в кросс-валидации
+    lasso_model.fit(X_train, y_train)  # Обучение модели Lasso
+
+    # Получение наилучшего значения alpha (α)
+    best_alpha_lasso = lasso_model.alpha_
+
+    # Оценка коэффициентов модели Lasso
+    lasso_coefficients = lasso_model.coef_
+
+    # Прогнозирование с использованием модели Lasso
+    y_pred_lasso = lasso_model.predict(X_test)
+
+    # Вычисление коэффициента детерминации (R^2) и среднеквадратичной ошибки (MSE) для Lasso
+    r2_lasso = r2_score(y_test, y_pred_lasso)
+    mse_lasso = mean_squared_error(y_test, y_pred_lasso)
+
+    # Вывод результатов
+    print(f"Лучшее значение alpha (λ) для Ridge: {best_alpha_ridge}")
+    print(f"Коэффициенты модели Ridge: {ridge_coefficients}")
+    print(f"R^2 для Ridge: {r2_ridge}")
+    print(f"MSE для Ridge: {mse_ridge}")
+
+    print(f"Лучшее значение alpha (α) для Lasso: {best_alpha_lasso}")
+    print(f"Коэффициенты модели Lasso: {lasso_coefficients}")
+    print(f"R^2 для Lasso: {r2_lasso}")
+    print(f"MSE для Lasso: {mse_lasso}")
+
+    # Прогнозирование с использованием модели Ridge
+    y_pred_ridge = ridge_model.predict(X_test)
+
+    # Прогнозирование с использованием модели Lasso
+    y_pred_lasso = lasso_model.predict(X_test)
+
+    # Вывод результатов прогноза
+    print("Прогноз с использованием модели Ridge:")
+    print(y_pred_ridge)
+
+    print("Прогноз с использованием модели Lasso:")
+    print(y_pred_lasso)
     # # Используйте модель для оценки стоимости автомобиля (пример входных данных)
     # input_data =  [2017, 1435, 1.0, 50000.0, 1.0, 2.0, 120.0, 5.0, 0.0]
 
     input = [input_data]
-    print(input)
+    # print(input)
+    # Используйте обученную модель для прогноза
     predicted_price = model.predict(input)
+    print("predicted_price = model.predict(input)")
+    print(predicted_price * 100000 * 1.16)
+
+    # То же самое, что и для LinearRegression, но используйте ridge_model вместо model
+    predicted_price_ridge = ridge_model.predict(input)
+    print("predicted_price_ridge = ridge_model.predict(input)")
+    print(predicted_price_ridge * 100000 * 1.16)
+
+    # То же самое, что и для LinearRegression, но используйте lasso_model вместо model
+    predicted_price_lasso = lasso_model.predict(input)
+    print("predicted_price_lasso = lasso_model.predict(input)")
+    print(predicted_price_lasso * 100000 * 1.16)
+
     price_of_the_car=predicted_price[0]*100000*1.16
 
     # Форматируем сумму с разделителями тысяч и символом рубля
     formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
     output_data = f'{formatted_price} ₽'
-    print(output_data)
-    print(output_data)
+    # print(output_data)
+    # print(output_data)
     return output_data

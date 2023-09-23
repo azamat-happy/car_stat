@@ -21,6 +21,7 @@ class Window(QMainWindow):
         input_data.append(self.ui.year.text())
         input_data.append(self.ui.engine_capacity.toPlainText())
 
+
         if self.ui.transmission_type.currentText() == "Manual":
             input_data.append(0)
         else:
@@ -59,7 +60,7 @@ class Window(QMainWindow):
             output_data = _logic_MainWindow(input_data)
             self.ui.price_lb.setText(output_data)
             self.ui.name_car_lb.setText(self.ui.name_car.toPlainText())
-        print(input_data)
+        # print(input_data)
 
 
     def _info(self):
