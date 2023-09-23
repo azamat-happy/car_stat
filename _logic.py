@@ -1,7 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_squared_error, r2_score
 # Для масштабирования данных перед передачей их в модель линейной регрессии
 from sklearn.preprocessing import StandardScaler
 import random
@@ -20,7 +20,7 @@ def _logic_MainWindow(input_data):
         # Извлечение числового значения из столбца resale_price
         df['resale_price'] = df['resale_price'].str.extract('(\d+\.\d+)')
         df['resale_price'] = df['resale_price'].astype(float)  # Преобразование в числа (float)
-        df['resale_price'] = [random.uniform(1.1, 17.2) for _ in range(len(df))]
+        # df['resale_price'] = [random.uniform(1.1, 17.2) for _ in range(len(df))]
 
         df['registered_year'] = full_name_part
 
@@ -29,36 +29,36 @@ def _logic_MainWindow(input_data):
         # Рассчитываем среднее арифметическое значение столбца engine_capacity
         mean_engine_capacity = df['engine_capacity'].mean()
         # Заполняем пустые значения средним арифметическим, округленным до ближайшего целого
-        df['engine_capacity'].fillna(round(mean_engine_capacity), inplace=True)
+        # df['engine_capacity'].fillna(round(mean_engine_capacity), inplace=True)
 
-        df['insurance'].fillna('Third Party insurance', inplace=True)
+        # df['insurance'].fillna('Third Party insurance', inplace=True)
 
         df['kms_driven'] = df['kms_driven'].str.replace(',', '').str.extract('(\d+)').astype(float)
-        df['kms_driven'].fillna(random.randint(30000, 100000), inplace=True)
+        # df['kms_driven'].fillna(random.randint(30000, 100000), inplace=True)
 
         df['max_power'] = df['max_power'].str.extract('(\d+\.\d+)').astype(float)
         # Рассчитываем среднее арифметическое значение столбца engine_capacity
         mean_max_power = df['max_power'].mean()
         # Заполняем пустые значения средним арифметическим, округленным до ближайшего целого
-        df['max_power'].fillna(round(mean_max_power), inplace=True)
+        # df['max_power'].fillna(round(mean_max_power), inplace=True)
 
         mean_seats = df['seats'].mean()
         # Заполняем пустые значения средним арифметическим, округленным до ближайшего целого
-        df['seats'].fillna(round(mean_seats), inplace=True)
+        # df['seats'].fillna(round(mean_seats), inplace=True)
 
         df['mileage'] = df['mileage'].str.extract('(\d+\.\d+)').astype(float)
         mean_mileage = df['mileage'].mean()
-        df['mileage'].fillna(round(mean_mileage), inplace=True)
+        # df['mileage'].fillna(round(mean_mileage), inplace=True)
 
         # Преобразование столбца owner_type
         owner_mapping = {"First Owner": 1, "Second Owner": 2, "Third Owner": 3}
         df['owner_type'] = df['owner_type'].map(owner_mapping)
-        df['owner_type'].fillna(random.randint(1, 3), inplace=True)
+        # df['owner_type'].fillna(random.randint(1, 3), inplace=True)
 
         # Label Encoding для столбца Fuel_Type
         fuel_mapping = {"Petrol": 1, "Diesel": 2, "CNG": 3}
         df['fuel_type'] = df['fuel_type'].map(fuel_mapping)
-        df['fuel_type'].fillna(random.randint(1, 3), inplace=True)
+        # df['fuel_type'].fillna(random.randint(1, 3), inplace=True)
 
         # Label Encoding для столбца transmission_type
         transmission_mapping = {"Manual": 0, "Automatic": 1}
@@ -67,10 +67,10 @@ def _logic_MainWindow(input_data):
         # Label Encoding для столбца body_type
         body_type_mapping = {"SUV": 0, "Hatchback": 1, "Sedan": 2, "Toyota": 3, "Minivans": 4, "MUV": 5, "Cars": 6}
         df['body_type'] = df['body_type'].map(body_type_mapping)
-        df['body_type'].fillna(random.randint(1, 6), inplace=True)
+        # df['body_type'].fillna(random.randint(1, 6), inplace=True)
 
         # # Удаление строк с пустыми значениями
-        # df.dropna(inplace=True)
+        df.dropna(inplace=True)
 
         # Сохранение исправленных данных обратно в файл
         df.to_excel(file_path, index=False)
@@ -91,6 +91,11 @@ def _logic_MainWindow(input_data):
 
     # Оцените производительность модели
     y_pred = model.predict(X_test)
+
+    # Вычисление коэффициента детерминации (R^2)
+    r2 = r2_score(y_test, y_pred)
+    print(f'Коэффициент детерминации (R^2): {r2}')
+
     mse = mean_squared_error(y_test, y_pred)
     print(f'Mean Squared Error: {mse}')
 
