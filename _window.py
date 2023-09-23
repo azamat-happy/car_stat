@@ -17,6 +17,8 @@ class Window(QMainWindow):
         self.ui.price_btn.clicked.connect(self._price_btn)
 
     def _price_btn(self):
+        self.ui._bar.setValue(0)
+        self.ui._bar.setFormat("Преобразование полученных данных")
         input_data = []
         input_data.append(self.ui.year.text())
         input_data.append(self.ui.engine_capacity.toPlainText())
@@ -57,10 +59,12 @@ class Window(QMainWindow):
                break
         if flag:
             input_data = [float(i) for i in input_data]
-            output_data = _logic_MainWindow(input_data)
+            output_data = _logic_MainWindow(input_data, self.ui._bar)
+            self.ui._bar.setValue(100)
+            self.ui._bar.setFormat("Готово!")
             self.ui.price_lb.setText(output_data)
             self.ui.name_car_lb.setText(self.ui.name_car.toPlainText())
-        # print(input_data)
+
 
 
     def _info(self):

@@ -11,10 +11,12 @@ from sklearn.preprocessing import StandardScaler
 import random
 
 
-def _logic_MainWindow(input_data):
+def _logic_MainWindow(input_data, _bar):
     # Загрузка файла XLSX
     file_path = 'data.xlsx'
     df = pd.read_excel(file_path)
+    _bar.setValue(10)
+    _bar.setFormat("Предобработка данных из файла")
     random.seed(10)
     try:
         # Преобразование столбца full_name
@@ -85,6 +87,9 @@ def _logic_MainWindow(input_data):
     # Исключение столбцов full_name и Insurance из признаков
     X = df.drop(['resale_price', 'full_name', 'insurance', 'city', 'Column1', 'mileage'], axis=1)
     y = df['resale_price']
+
+    _bar.setValue(20)
+    _bar.setFormat("Получение метрик")
 
     # Разделите данные на обучающий и тестовый наборы
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -189,35 +194,38 @@ def _logic_MainWindow(input_data):
     print(f"MAE для Ridge: {mae_ridge}")
     print(f"MAE для Lasso: {mae_lasso}")
 
-    plt.figure()
-    # График остатков для LinearRegression модели
-    residuals_linear = y_actual - y_pred
-    plt.scatter(y_pred, residuals_linear)
-    plt.xlabel("Прогнозные значения")
-    plt.ylabel("Остатки")
-    plt.title("График остатков для LinearRegression модели")
-    plt.axhline(y=0, color='r', linestyle='--')
-    plt.show()
 
-    plt.figure()
-    # График остатков для Ridge модели
-    residuals_ridge = y_actual - y_pred_ridge
-    plt.scatter(y_pred_ridge, residuals_ridge)
-    plt.xlabel("Прогнозные значения")
-    plt.ylabel("Остатки")
-    plt.title("График остатков для Ridge модели")
-    plt.axhline(y=0, color='r', linestyle='--')
-    plt.show()
-
-    plt.figure()
-    # График остатков для Lasso модели
-    residuals_lasso = y_actual - y_pred_lasso
-    plt.scatter(y_pred_lasso, residuals_lasso)
-    plt.xlabel("Прогнозные значения")
-    plt.ylabel("Остатки")
-    plt.title("График остатков для Lasso модели")
-    plt.axhline(y=0, color='r', linestyle='--')
-    plt.show()
+    # plt.figure()
+    # _bar.setValue(60)
+    # _bar.setFormat("Построение графиков")
+    # # График остатков для LinearRegression модели
+    # residuals_linear = y_actual - y_pred
+    # plt.scatter(y_pred, residuals_linear)
+    # plt.xlabel("Прогнозные значения")
+    # plt.ylabel("Остатки")
+    # plt.title("График остатков для LinearRegression модели")
+    # plt.axhline(y=0, color='r', linestyle='--')
+    # plt.show()
+    #
+    # plt.figure()
+    # # График остатков для Ridge модели
+    # residuals_ridge = y_actual - y_pred_ridge
+    # plt.scatter(y_pred_ridge, residuals_ridge)
+    # plt.xlabel("Прогнозные значения")
+    # plt.ylabel("Остатки")
+    # plt.title("График остатков для Ridge модели")
+    # plt.axhline(y=0, color='r', linestyle='--')
+    # plt.show()
+    #
+    # plt.figure()
+    # # График остатков для Lasso модели
+    # residuals_lasso = y_actual - y_pred_lasso
+    # plt.scatter(y_pred_lasso, residuals_lasso)
+    # plt.xlabel("Прогнозные значения")
+    # plt.ylabel("Остатки")
+    # plt.title("График остатков для Lasso модели")
+    # plt.axhline(y=0, color='r', linestyle='--')
+    # plt.show()
 
     # Для модели Ridge
     residuals_ridge = y_actual - y_pred_ridge  # Остатки для Ridge
@@ -256,6 +264,9 @@ def _logic_MainWindow(input_data):
     r2_lasso = r2_score(y_test, y_pred_lasso)
     mse_lasso = mean_squared_error(y_test, y_pred_lasso)
 
+    _bar.setValue(70)
+    _bar.setFormat("Получение результата")
+
     if r2_ridge > r2_linear and r2_ridge > r2_lasso and mse_ridge < mse_linear and mse_ridge < mse_lasso:
         # Вывод результата для Ridge модели
         print("Прогноз с использованием модели Ridge:")
@@ -280,4 +291,5 @@ def _logic_MainWindow(input_data):
         formatted_price = '{:,.2f}'.format(price_of_the_car).replace(',', ' ')
         output_data = f'{formatted_price} ₽'
         return output_data
+
 
